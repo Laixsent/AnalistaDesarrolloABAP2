@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog'; 
+import { MatListModule } from '@angular/material/list';
 
 // COMPONENTS
 import { AppComponent } from './app.component';
@@ -20,13 +21,15 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { BuscarComponent } from './components/buscar/buscar.component';
 import {MatCardModule} from '@angular/material/card';
+import { DetalleLibroModalComponent } from './detalle-libro-modal/detalle-libro-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InicioComponent,
     SidenavComponent,
-    BuscarComponent
+    BuscarComponent,
+    DetalleLibroModalComponent
   ],
   imports: [
     AppRoutingModule,
@@ -41,6 +44,7 @@ import {MatCardModule} from '@angular/material/card';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

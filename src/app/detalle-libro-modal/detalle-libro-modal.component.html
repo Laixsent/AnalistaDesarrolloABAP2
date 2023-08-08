@@ -1,0 +1,16 @@
+<div class="modal-container">
+    <div class="modal-content">
+      <h2 class="modal-title">{{ libro.title }}</h2>
+      <div class="modal-details">
+        <p><strong>Editorial:</strong> {{ libro.editorial }}</p>
+        <p><strong>ISBN:</strong> {{ libro.isbn }}</p>
+        <p><strong>Formato Físico:</strong> {{ libro.formatoFisico }}</p>
+        <p><strong>Fecha de Publicación:</strong> {{ libro.fechaPublicacion }}</p>
+      </div>
+      <div class="modal-image-container">
+        <img class="modal-image" [src]="libro.portada" alt="Portada del libro">
+      </div>
+      <button (click)="cerrar()" class="close-button mat-raised-button">Cerrar</button>
+    </div>
+  </div>
+  

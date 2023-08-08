@@ -15,6 +15,8 @@ export class InicioComponent {
   error: string | null = null;
   public bookIds!: any[];
   public coversIds: string[];
+  selectedLibro: any | null = null;
+
   ngOnInit() {
     this.getTopBooks();
     
@@ -39,17 +41,17 @@ export class InicioComponent {
   
     forkJoin(observables).subscribe(
       (results: any[]) => {
-        // console.log(results);        
+        console.log(results);        
         const transformedBooks = results.map(book => ({
           editorial: book.publishers ? book.publishers.join(', ') : 'N/A',
           title: book.title,
           isbn: book.isbn_13 ? book.isbn_13[0] : 'N/A',
           formatoFisico: book.physical_format || 'N/A',
-          fechaPublicacion: book.publish_date ? book.publish_date[0] : 'N/A',
+          fechaPublicacion: book.publish_date ? book.publish_date : 'N/A',
           portada: book.covers ? this.apiServiceService.obtenerPortada(book.covers[0]) : '',
         }));
   
-        console.log(transformedBooks);
+        // console.log(transformedBooks);
         this.topBooks = transformedBooks;
         this.loading = false;
         this.obtenerPortadasParaLibros();
@@ -85,6 +87,9 @@ export class InicioComponent {
     );
   }
 
+ openDetalleLibroModal(libro: any): void {
+    this.selectedLibro = libro;
+  }
   
   
 }

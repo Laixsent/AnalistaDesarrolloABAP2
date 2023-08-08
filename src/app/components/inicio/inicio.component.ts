@@ -39,8 +39,7 @@ export class InicioComponent {
   
     forkJoin(observables).subscribe(
       (results: any[]) => {
-        // console.log(results);
-        
+        // console.log(results);        
         const transformedBooks = results.map(book => ({
           editorial: book.publishers ? book.publishers.join(', ') : 'N/A',
           title: book.title,

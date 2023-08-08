@@ -66,9 +66,9 @@ export class InicioComponent {
   private obtenerPortadasParaLibros(): void {
     const observables = this.topBooks
       .filter((libro) => libro.covers)
-      .map((libro) => this.apiServiceService.obtenerPortada(libro.covers[0])); // Cambia 'libro.idPortada' por 'libro.covers[0]'
+      .map((libro) => this.apiServiceService.obtenerPortada(libro.covers[0])); 
 
-    if (observables.length === 0) return; // No hay portadas que obtener
+    if (observables.length === 0) return; 
 
     forkJoin(observables).subscribe(
       (urls: string[]) => {

@@ -9,7 +9,7 @@ export class DetalleLibroModalComponent {
   @Input() libro: any;
   @Output() cerrarModal = new EventEmitter<void>();
   
-  // Lógica adicional si es necesaria
+
   constructor(){    
   }
 

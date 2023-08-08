@@ -10,9 +10,7 @@ export class DetalleLibroModalComponent {
   @Output() cerrarModal = new EventEmitter<void>();
   
   // Lógica adicional si es necesaria
-  constructor(){
-    // console.log("Esten es el objeto del libro",this.libro);
-    
+  constructor(){    
   }
 
   cerrar(): void {

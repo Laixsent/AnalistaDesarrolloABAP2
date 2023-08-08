@@ -40,8 +40,7 @@ export class InicioComponent {
     );
   
     forkJoin(observables).subscribe(
-      (results: any[]) => {
-        console.log(results);        
+      (results: any[]) => {     
         const transformedBooks = results.map(book => ({
           editorial: book.publishers ? book.publishers.join(', ') : 'N/A',
           title: book.title,
@@ -51,7 +50,7 @@ export class InicioComponent {
           portada: book.covers ? this.apiServiceService.obtenerPortada(book.covers[0]) : '',
         }));
   
-        // console.log(transformedBooks);
+   
         this.topBooks = transformedBooks;
         this.loading = false;
         this.obtenerPortadasParaLibros();
@@ -69,7 +68,6 @@ export class InicioComponent {
       .filter((libro) => libro.covers)
       .map((libro) => this.apiServiceService.obtenerPortada(libro.covers[0])); // Cambia 'libro.idPortada' por 'libro.covers[0]'
 
-    // console.log(observables);
     if (observables.length === 0) return; // No hay portadas que obtener
 
     forkJoin(observables).subscribe(
@@ -77,7 +75,7 @@ export class InicioComponent {
         this.topBooks.forEach((libro, index) => {
           if (libro.covers) { // Verifica si el libro tiene portadas
             libro.portada = observables[index];
-            // console.log(observables[index]);
+          
           }
         });
       },

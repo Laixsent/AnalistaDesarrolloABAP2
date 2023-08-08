@@ -10,7 +10,7 @@ export class ApiServiceService {
   constructor(private http: HttpClient) { }
 
   public buscar(busqueda: string): Observable<any> {
-    return this.http.get<any>(`https://openlibrary.org/search.json?q=${busqueda}&fields=*,availability&limit=5`);
+    return this.http.get<any>(`https://openlibrary.org/search.json?q=${busqueda}&fields=*,availability&limit=50`);
   }
 
   public obtenerPortada(idPortada: string): string {

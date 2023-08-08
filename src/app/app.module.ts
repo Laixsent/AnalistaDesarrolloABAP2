@@ -12,7 +12,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon'; 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatDialog } from '@angular/material/dialog'; 
 import { MatListModule } from '@angular/material/list';
 
 // COMPONENTS

@@ -22,7 +22,6 @@ export class BuscarComponent implements OnInit {
   public obtenerlibros(): void {
     this.apiServiceService.buscar(this.buscador).subscribe(
       (data: any) => {
-        console.log(data.docs);
         this.librosBuscados = data.docs.map((libroData: any) => {
           return {
             idPortada: libroData.cover_i,
@@ -42,12 +41,10 @@ export class BuscarComponent implements OnInit {
   }
 
   private obtenerPortadasParaLibros(): void {
-    // console.log(this.librosBuscados);
     const observables = this.librosBuscados
     .filter((libro) => libro.idPortada)
       .map((libro) => this.apiServiceService.obtenerPortada(libro.idPortada));
 
-    // console.log(observables[0]);  
     if (observables.length === 0) return; // No hay portadas que obtener
 
     forkJoin(observables).subscribe(

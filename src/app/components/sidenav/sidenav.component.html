@@ -1,0 +1,26 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" closed>
+        <div class="sidenav-header">
+          <mat-icon>library_books</mat-icon>
+            <h2>Libreria </h2>
+          </div>
+      
+          
+          <ul>
+            <li mat-list-item routerLink="/home" (click)="sidenav.close()">Inicio</li>
+            <li mat-list-item routerLink="/about" (click)="sidenav.close()">Acerca de</li>
+            <li mat-list-item routerLink="/contact" (click)="sidenav.close()">Contacto</li>
+          </ul>
+    </mat-sidenav>  
+    <mat-sidenav-content>
+      <div class="example-button-container">
+        <button mat-mini-fab color="primary"
+        (click)="sidenavfunction()">
+        <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  

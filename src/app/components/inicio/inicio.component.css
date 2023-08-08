@@ -1,0 +1,6 @@
+.card-image {
+    width: 100px; /* Ajusta el ancho según tus preferencias */
+    height: 150px; /* Ajusta la altura según tus preferencias */
+    object-fit: cover; /* Ajusta cómo se ajusta la imagen dentro del contenedor */
+  }
+  

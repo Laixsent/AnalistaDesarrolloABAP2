@@ -1,0 +1,18 @@
+<h2>Top 5 Libros Más Leídos</h2>
+
+<div class="card-container">
+  <ng-container *ngIf="topBooks && topBooks.length > 0; else noLibros">
+    <mat-card class="card" *ngFor="let libro of topBooks">
+      <mat-card-header>
+        <mat-card-title>{{ libro.title }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-footer>
+          <img class="card-image" [src]="libro.portada" alt="Portada del libro">
+        </mat-card-footer>
+    </mat-card>
+  </ng-container>
+
+  <ng-template #noLibros>
+    <p>No se encontraron libros para la búsqueda.</p>
+  </ng-template>
+</div>

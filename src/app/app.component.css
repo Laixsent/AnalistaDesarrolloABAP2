@@ -1,0 +1,10 @@
+app-sidenav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.container{
+  margin-left: 12%;
+}  

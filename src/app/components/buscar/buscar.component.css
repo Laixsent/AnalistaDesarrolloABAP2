@@ -1,0 +1,65 @@
+/* Estilos para el contenedor principal */
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para el botón de búsqueda */
+  button {
+    margin-left: 10px;
+  }
+  
+  /* Estilos para el contenedor de tarjetas */
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* Estilos para cada tarjeta de libro */
+  .card {
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilos para el encabezado de la tarjeta */
+  .card-header {
+    text-align: center;
+  }
+  
+  /* Estilos para el cuerpo de la tarjeta */
+  .card-body {
+    text-align: left;
+  }
+  
+  /* Estilos para el título del libro */
+  h3 {
+    font-size: 18px;
+    margin: 10px 0;
+  }
+  
+  /* Estilos para los párrafos del libro */
+  p {
+    margin: 5px 0;
+  }
+  
+  /* Estilos para el pie de la tarjeta */
+  .card-footer {
+    text-align: center;
+    margin-top: 10px;
+    color: #999;
+  }
+  
+  /* Estilos para la imagen de la portada del libro */
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  

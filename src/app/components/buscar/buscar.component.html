@@ -1,0 +1,35 @@
+<div class="container">
+    <mat-form-field appearance="fill">
+      <input matInput id="input" [(ngModel)]="buscador" (keyup.enter)="obtenerlibros()" placeholder="Buscar">
+      <button mat-button (click)="obtenerlibros()">Buscar</button>
+    </mat-form-field>
+  </div>
+  
+  <br>
+  
+  <div class="card-container">
+    <ng-container *ngIf="librosBuscados && librosBuscados.length > 0; else noLibros">
+      <mat-card class="card" *ngFor="let libro of librosBuscados">
+        <mat-card-header>
+          <mat-card-title>{{ libro.titulo }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Autor: {{ libro.author_name }}</p>
+          <p>Fecha de publicación: {{ libro.first_publish_year }}</p>
+        </mat-card-content>
+        <mat-card-footer>
+          <p>{{libro.portada}}</p>
+        </mat-card-footer>
+        <mat-card-footer>
+            <img [src]="libro.portada" alt="Portada del libro">
+          </mat-card-footer>
+      </mat-card>
+    </ng-container>
+  
+    <ng-template #noLibros>
+      <p>No se encontraron libros para la búsqueda.</p>
+    </ng-template>
+  </div>
+  
+
+  

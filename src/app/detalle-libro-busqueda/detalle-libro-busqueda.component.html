@@ -3,29 +3,27 @@
     <mat-card class="modal-container">
       <mat-card-header>
         <mat-card-title>
-          <h2 class="modal-title">{{ libro.title }}</h2>
+          <h2 class="modal-title">{{ libro.titulo }}</h2>
         </mat-card-title>
       </mat-card-header>
-      <img class="modal-image" [src]="libro.portada" alt="Portada del libro">
+      <img class="card-image" [src]="libro.portada ? libro.portada : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj6jBYbLaZcg6SQcrBRxX00q7MdPjilwOvYn3jUZTtvlbFPincvLG6yhJUp2O7bez6hOM&usqp=CAU'" alt="Portada del libro">
       <mat-card-content class="modal-details">
         <p><strong>Editorial:</strong> {{ libro.editorial }}</p>
         <p><strong>ISBN:</strong> {{ libro.isbn }}</p>
-        <p><strong>Formato Físico:</strong> {{ libro.formatoFisico }}</p>
-        <p><strong>Fecha de Publicación:</strong> {{ libro.fechaPublicacion }}</p>
+        <p><strong>Paginas:</strong> {{ libro.formatoFisico }}</p>
+        <p><strong>Fecha de Publicación:</strong> {{ libro.first_publish_year }}</p>
       </mat-card-content>
       <mat-card-actions >
 
+        <button (click)="agregar()"  mat-fab extended color="primary">
+          Agregar
+          <mat-icon>add</mat-icon>
+        </button>
         <button (click)="cerrar()"  mat-fab extended color="warn">
           Cerrar
           <mat-icon>close</mat-icon>
         </button>
-
       </mat-card-actions>
     </mat-card>
   </div>
 </div>
-
-
-
-
-

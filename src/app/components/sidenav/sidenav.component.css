@@ -31,3 +31,63 @@ mat-sidenav-content {
   font-size: 20px;
   margin: 0;
 }
+
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+li:hover {
+  background-color: #f0f0f0;
+  transform: translateX(5px);
+}
+
+
+li:hover mat-icon {
+  transform: translateX(2px);
+}
+
+/* Style for the sidenav header */
+.sidenav-header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: #333;
+  color: white;
+}
+
+.sidenav-header mat-icon {
+
+  margin-right: 10px;
+  transition: transform 0.2s ease;
+}
+
+.sidenav-header mat-icon:hover {
+  transform: scale(1.1);
+}
+
+.sidenav-header h2 {
+  margin: 0;
+}
+
+/* Style for the mini-fab button */
+.example-button-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  transition: transform 0.2s ease;
+}
+
+.example-button-container button:hover {
+  transform: scale(1.1);
+}

@@ -19,10 +19,11 @@ export class InicioComponent {
 
   ngOnInit() {
     this.getTopBooks();
-    
+
   }
-  constructor(private apiServiceService: ApiServiceService) {
-    
+  constructor(
+    private apiServiceService: ApiServiceService
+    ){
     this.bookIds = [
       'OL9155299M',
       'OL9117315M',
@@ -32,15 +33,15 @@ export class InicioComponent {
     ];
     this.coversIds = [];
   }
-  
-  
+
+
   getTopBooks() {
     const observables = this.bookIds.map(bookId =>
       this.apiServiceService.obtenerTopLibros(bookId)
     );
-  
+
     forkJoin(observables).subscribe(
-      (results: any[]) => {     
+      (results: any[]) => {
         const transformedBooks = results.map(book => ({
           editorial: book.publishers ? book.publishers.join(', ') : 'N/A',
           title: book.title,
@@ -49,8 +50,8 @@ export class InicioComponent {
           fechaPublicacion: book.publish_date ? book.publish_date : 'N/A',
           portada: book.covers ? this.apiServiceService.obtenerPortada(book.covers[0]) : '',
         }));
-  
-   
+
+
         this.topBooks = transformedBooks;
         this.loading = false;
         this.obtenerPortadasParaLibros();
@@ -63,19 +64,20 @@ export class InicioComponent {
     );
   }
 
+
   private obtenerPortadasParaLibros(): void {
     const observables = this.topBooks
       .filter((libro) => libro.covers)
-      .map((libro) => this.apiServiceService.obtenerPortada(libro.covers[0])); 
+      .map((libro) => this.apiServiceService.obtenerPortada(libro.covers[0]));
 
-    if (observables.length === 0) return; 
+    if (observables.length === 0) return;
 
     forkJoin(observables).subscribe(
       (urls: string[]) => {
         this.topBooks.forEach((libro, index) => {
           if (libro.covers) { // Verifica si el libro tiene portadas
             libro.portada = observables[index];
-          
+
           }
         });
       },
@@ -87,7 +89,8 @@ export class InicioComponent {
 
  openDetalleLibroModal(libro: any): void {
     this.selectedLibro = libro;
+
   }
-  
-  
+
+
 }

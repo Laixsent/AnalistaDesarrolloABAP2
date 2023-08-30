@@ -1,0 +1,58 @@
+.user-profile {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  margin-right: 10
+}
+
+.stored-book-card {
+  margin-bottom: 20px;
+}
+
+.book-card {
+  width: 300px;
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.book-card:hover {
+  transform: scale(1.05);
+}
+
+.no-books {
+  margin-top: 20px;
+  font-size: 18px;
+  color: gray;
+}
+.datos{
+  display: flex ;
+  flex-direction: column;
+}
+.mat-grid-list {
+  margin: 20px;
+}
+
+.stored-book-tile {
+  display: flex;
+  justify-content: center;
+}
+
+.book-card {
+  width: 200px;
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.book-card:hover {
+  transform: scale(1.05);
+}
+
+.no-books {
+  margin-top: 20px;
+  font-size: 18px;
+  color: gray;
+  text-align: center;
+}

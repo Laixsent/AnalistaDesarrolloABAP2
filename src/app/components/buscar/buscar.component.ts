@@ -1,4 +1,3 @@
-// buscar.component.ts
 import { Component, OnInit } from '@angular/core';
 import { ApiServiceService } from "../../service/api-service.service";
 import { libro } from 'src/app/modelos/libro';
@@ -12,27 +11,46 @@ import { forkJoin } from 'rxjs';
 export class BuscarComponent implements OnInit {
   public buscador: string = '';
   public librosBuscados: libro[] = [];
+  selectedLibro: any | null = null;
 
-  constructor(private apiServiceService: ApiServiceService) {}
+
+
+  constructor(
+    private apiServiceService: ApiServiceService
+    ){
+  }
 
   ngOnInit(): void {
-    // this.obtenerlibros(); // Llamar al método para obtener los libros al inicializar el componente
+     this.obtenerlibros(); // Llamar al método para obtener los libros al inicializar el componente
+
+  }
+
+  realizarBusqueda() {
+    if (this.buscador && this.buscador.length >= 3) {
+      this.obtenerlibros();
+    } else {
+      this.librosBuscados = [];
+    }
   }
 
   public obtenerlibros(): void {
     this.apiServiceService.buscar(this.buscador).subscribe(
       (data: any) => {
         this.librosBuscados = data.docs.map((libroData: any) => {
+          // console.log("Esto es de busqueda cuando se asignan parametros",libroData);
           return {
             idPortada: libroData.cover_i,
+            editorial: libroData.publisher ? libroData.publisher.join(', ') : 'N/A',
             titulo: libroData.title,
             author_name: libroData.author_name ? libroData.author_name[0] : 'Unknown Author',
+            isbn: libroData.isbn ? libroData.isbn[0] : 'N/A',
+            formatoFisico: libroData.number_of_pages_median || 'N/A',
             first_publish_year: libroData.first_publish_year,
             portada: ''
           };
         });
 
-        this.obtenerPortadasParaLibros(); // Obtener la información de la portada para cada libro
+        this.obtenerPortadasParaLibros();
       },
       error => {
         console.error('Error al obtener los libros:', error);
@@ -40,12 +58,13 @@ export class BuscarComponent implements OnInit {
     );
   }
 
+
   private obtenerPortadasParaLibros(): void {
     const observables = this.librosBuscados
-    .filter((libro) => libro.idPortada)
+      .filter((libro) => libro.idPortada)
       .map((libro) => this.apiServiceService.obtenerPortada(libro.idPortada));
 
-    if (observables.length === 0) return; // No hay portadas que obtener
+    if (observables.length === 0) return;
 
     forkJoin(observables).subscribe(
       (urls: string[]) => {
@@ -60,4 +79,11 @@ export class BuscarComponent implements OnInit {
       }
     );
   }
+
+  openDetalleLibroModal(libro: any): void {
+
+    this.selectedLibro = libro;
+
+  }
+
 }

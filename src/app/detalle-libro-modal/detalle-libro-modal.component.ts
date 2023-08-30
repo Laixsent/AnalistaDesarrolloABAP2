@@ -8,12 +8,13 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class DetalleLibroModalComponent {
   @Input() libro: any;
   @Output() cerrarModal = new EventEmitter<void>();
-  
 
-  constructor(){    
+
+  constructor(){
   }
 
   cerrar(): void {
+
     this.cerrarModal.emit();
   }
 }

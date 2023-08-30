@@ -1,32 +1,34 @@
 <div class="container">
-    <mat-form-field appearance="fill">
-      <input matInput id="input" [(ngModel)]="buscador" (keyup.enter)="obtenerlibros()" placeholder="Buscar">
-      <button mat-button (click)="obtenerlibros()">Buscar</button>
-    </mat-form-field>
-  </div>
-  
-  <br>
-  
-  <div class="card-container">
-    <ng-container *ngIf="librosBuscados && librosBuscados.length > 0; else noLibros">
-      <mat-card class="card" *ngFor="let libro of librosBuscados">
-        <mat-card-header>
-          <mat-card-title>{{ libro.titulo }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>Autor: {{ libro.author_name }}</p>
-          <p>Fecha de publicación: {{ libro.first_publish_year }}</p>
-        </mat-card-content>
-        <mat-card-footer>
-            <img [src]="libro.portada" alt="Portada del libro">
-          </mat-card-footer>
-      </mat-card>
-    </ng-container>
-  
-    <ng-template #noLibros>
-      <p>No se encontraron libros para la búsqueda.</p>
-    </ng-template>
-  </div>
-  
+  <mat-form-field appearance="fill" class="search-form-field">
+    <input type="search" matInput [(ngModel)]="buscador" id="search" (input)="realizarBusqueda()" placeholder="Buscar">
+  </mat-form-field>
+</div>
+<br>
 
-  
+<div class="card-container">
+  <ng-container *ngIf="librosBuscados && librosBuscados.length > 0; else noLibros">
+    <mat-card class="card" *ngFor="let libro of librosBuscados">
+      <mat-card-header>
+        <mat-card-title>{{ libro.titulo }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p ><b>Autor:</b> {{ libro.author_name }}</p>
+        <p><b>Fecha de publicación:</b> {{ libro.first_publish_year }}</p>
+      </mat-card-content>
+      <div class="image-container" (click)="openDetalleLibroModal(libro)">
+        <img class="card-image" [src]="libro.portada ? libro.portada : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj6jBYbLaZcg6SQcrBRxX00q7MdPjilwOvYn3jUZTtvlbFPincvLG6yhJUp2O7bez6hOM&usqp=CAU'" alt="Portada del libro">
+      </div>
+    </mat-card>
+  </ng-container>
+
+  <ng-template #noLibros>
+    <p>No hay coincidencias.</p>
+  </ng-template>
+</div>
+
+<!-- Modal para mostrar detalles del libro -->
+<app-detalle-libro-busqueda
+  *ngIf="selectedLibro"
+  [libro]="selectedLibro"
+  (cerrarModal)="selectedLibro = null">
+</app-detalle-libro-busqueda>

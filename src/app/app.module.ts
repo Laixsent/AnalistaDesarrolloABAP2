@@ -14,6 +14,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 // COMPONENTS
 import { AppComponent } from './app.component';
@@ -24,6 +27,8 @@ import {MatCardModule} from '@angular/material/card';
 import { DetalleLibroModalComponent } from './detalle-libro-modal/detalle-libro-modal.component';
 import { DetalleLibroBusquedaComponent } from './detalle-libro-busqueda/detalle-libro-busqueda.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
+import {MatSliderModule} from '@angular/material/slider';
+
 
 @NgModule({
   declarations: [
@@ -50,6 +55,9 @@ import { PerfilComponent } from './components/perfil/perfil.component';
     MatInputModule,
     MatListModule,
     MatGridListModule,
+    MatProgressSpinnerModule,
+    MatSliderModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

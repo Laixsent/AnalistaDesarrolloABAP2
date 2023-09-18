@@ -5,32 +5,13 @@
 }
 
 .avatar {
-  margin-right: 10
+  margin-right: 10px;
 }
 
 .stored-book-card {
   margin-bottom: 20px;
 }
 
-.book-card {
-  width: 300px;
-  transition: transform 0.3s;
-  cursor: pointer;
-}
-
-.book-card:hover {
-  transform: scale(1.05);
-}
-
-.no-books {
-  margin-top: 20px;
-  font-size: 18px;
-  color: gray;
-}
-.datos{
-  display: flex ;
-  flex-direction: column;
-}
 .mat-grid-list {
   margin: 20px;
 }
@@ -41,18 +22,140 @@
 }
 
 .book-card {
-  width: 200px;
-  transition: transform 0.3s;
-  cursor: pointer;
+  width: 250px;
+  margin: 0 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 
 .book-card:hover {
   transform: scale(1.05);
 }
+
+.card-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  text-align: center;
+}
+
+.book-image {
+  max-width: 100%;
+  max-height: 150px;
+  object-fit: cover;
+}
+
 
 .no-books {
   margin-top: 20px;
   font-size: 18px;
   color: gray;
   text-align: center;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+
+/* Inicio Estilos de la parte trasera del card */
+
+.card-content-edit {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+}
+.cardBack{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+  color: cadetblue;
+  margin-bottom: 3px;
+}
+
+.actionCardBack{
+  display: flex;
+  padding: 2%;
+  width: 92%;
+  justify-content: space-around;
+}
+
+/* Fin Estilos de la parte trasera del card */
+
+
+@media (max-width: 768px) {
+  .mat-grid-list {
+    margin: 10px;
+  }
+
+  .stored-book-tile {
+    justify-content: flex-start;
+  }
+
+  .book-card {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
+.rating {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+
+
+.cardBody{
+  width: auto;
+  height: auto;
+}
+
+/* Animacion de las estrellas  */
+.star {
+  font-size: 125%;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+
+/* Estilo para las estrellas sin llenar */
+.star.empty {
+  color: rgb(55, 55, 55);
+}
+
+/* Estilo para las estrellas llenas */
+.star.filled {
+  color: gold;
+  animation: starFlash 0.5s infinite alternate;
+}
+
+/* Animación de destello para las estrellas llenas */
+@keyframes starFlash {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
+
+
+.mat-grid-tile-content {
+  top: 0;
+  left: 0;
+  position: absolute;
+  display: flex;
+  align-items: center;
 }

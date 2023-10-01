@@ -6,14 +6,16 @@ import { InicioComponent } from './components/inicio/inicio.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { BuscarComponent } from './components/buscar/buscar.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
+import { LoginComponent } from './login/login.component';
 
 
 const routes: Routes = [
-  { path: '', component: AppComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' }, 
   { path: 'inicio', component: InicioComponent },
   { path: 'menu', component: SidenavComponent },
   { path: 'buscar', component: BuscarComponent },
-  { path: 'perfil', component: PerfilComponent }
+  { path: 'perfil', component: PerfilComponent },
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({

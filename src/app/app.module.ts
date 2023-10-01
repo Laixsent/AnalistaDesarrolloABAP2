@@ -16,7 +16,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
+import { MatSelectModule } from '@angular/material/select';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // COMPONENTS
 import { AppComponent } from './app.component';
@@ -28,6 +29,8 @@ import { DetalleLibroModalComponent } from './detalle-libro-modal/detalle-libro-
 import { DetalleLibroBusquedaComponent } from './detalle-libro-busqueda/detalle-libro-busqueda.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import {MatSliderModule} from '@angular/material/slider';
+import { LoginComponent } from './login/login.component';
+
 
 
 @NgModule({
@@ -38,7 +41,8 @@ import {MatSliderModule} from '@angular/material/slider';
     BuscarComponent,
     DetalleLibroModalComponent,
     DetalleLibroBusquedaComponent,
-    PerfilComponent
+    PerfilComponent,
+    LoginComponent
   ],
   imports: [
     AppRoutingModule,
@@ -58,6 +62,8 @@ import {MatSliderModule} from '@angular/material/slider';
     MatProgressSpinnerModule,
     MatSliderModule,
     MatSnackBarModule,
+    MatSelectModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

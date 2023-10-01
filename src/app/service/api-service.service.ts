@@ -21,4 +21,16 @@ export class ApiServiceService {
     return this.http.get<any>(`/book/${bookId}.json`);
   }  
   
+  iniciarSesion(usuario: string, contrasena: string): Observable<any> {
+    const body = {
+      usuario: usuario,
+      contrasena: contrasena
+    };
+
+    
+    console.log("Esto es lo que esta llegando ", body);
+    
+    return this.http.post<any>(`/login`, body);
+  }
+
 }

@@ -1,23 +1,58 @@
-<h2 class="section-title">Top 5 Libros Más Leídos</h2>
-<div class="card-container">
-  <ng-container *ngIf="topBooks && topBooks.length > 0; else noLibros">
-    <mat-card class="card" *ngFor="let libro of topBooks">
-      <mat-card-header>
-        <mat-card-title class="Titulos">{{ libro.title }}</mat-card-title>
-      </mat-card-header>
-      <div class="image-container" (click)="openDetalleLibroModal(libro)">
-        <img class="card-image" [src]="libro.portada" alt="Portada del libro">
+<form [formGroup]="libroForm" (ngSubmit)="guardarLibro()">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Nuevos Libros</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field>
+        <input matInput placeholder="Título" formControlName="titulo" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Idioma" formControlName="idioma" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Autor" formControlName="autor" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Género" formControlName="genero" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Universidad" formControlName="universidad" required>
+      </mat-form-field>
+      <div class="form-group">
+        <label for="pdf">PDF:</label>
+        <input type="file" id="pdf" (change)="onFileSelected($event)" accept=".pdf" required>
       </div>
-    </mat-card>
-  </ng-container>
-  <ng-template #noLibros>
-    <p>No hay coincidencias.</p>
-  </ng-template>
-</div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="button" (click)="mostrarDatosFormulario()">Mostrar Datos</button>
+      <button mat-raised-button color="primary" type="submit">Guardar</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
 
-<!-- Modal para mostrar detalles del libro -->
-<app-detalle-libro-modal
-*ngIf="selectedLibro"
-[libro]="selectedLibro"
-(cerrarModal)="selectedLibro = null">
-</app-detalle-libro-modal>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Título</th>
+      <th>Idioma</th>
+      <th>Autor</th>
+      <th>Género</th>
+      <th>Universidad</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let libro of libros" (click)="seleccionarLibro(libro)">
+      <td>{{ libro.titulo }}</td>
+      <td>{{ libro.idioma }}</td>
+      <td>{{ libro.autor }}</td>
+      <td>{{ libro.genero }}</td>
+      <td>{{ libro.universidad }}</td>
+      <td>
+        <button mat-icon-button color="primary" (click)="editarLibro()"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="eliminarLibro()"><mat-icon>delete</mat-icon></button>
+      </td>
+    </tr>
+  </tbody>
+</table>

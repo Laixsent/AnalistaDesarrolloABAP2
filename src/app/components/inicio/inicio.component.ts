@@ -1,96 +1,108 @@
-import { Component } from '@angular/core';
-import { ApiServiceService } from "../../service/api-service.service";
-import { libro } from 'src/app/modelos/libro';
-import { forkJoin } from 'rxjs';
-
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ApiServiceService } from 'src/app/service/api-service.service';
 
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.css']
 })
-export class InicioComponent {
-  topBooks: any[] = [];
-  loading: boolean = true;
-  error: string | null = null;
-  public bookIds!: any[];
-  public coversIds: string[];
-  selectedLibro: any | null = null;
+export class InicioComponent implements OnInit {
+  libroForm: FormGroup;
+  libros: any[] = [];
+  libroSeleccionado: any;
+  selectedFile: File | null = null;
+
+  constructor(private fb: FormBuilder,private apiServiceService: ApiServiceService) {
+    this.libroForm = this.fb.group({
+      titulo: ['', Validators.required],
+      idioma: ['', Validators.required],
+      autor: ['', Validators.required],
+      genero: ['', Validators.required],
+      pdf: [null, Validators.required], 
+      universidad: ['', Validators.required]
+    });
+  }
 
   ngOnInit() {
-    this.getTopBooks();
-
-  }
-  constructor(
-    private apiServiceService: ApiServiceService
-    ){
-    this.bookIds = [
-      'OL9155299M',
-      'OL9117315M',
-      'OL37468678M',
-      'OL9199218M',
-      'OL32186077M'
-    ];
-    this.coversIds = [];
+    this.cargarLibros();
   }
 
+  mostrarDatosFormulario() {
+    // this.apiServiceService.buscar(this.buscador).subscribe(
+    //   (data: any) => {
 
-  getTopBooks() {
-    const observables = this.bookIds.map(bookId =>
-      this.apiServiceService.obtenerTopLibros(bookId)
-    );
+    this.libroForm && this.libroForm.valid
+      const datosFormulario = `
+        Título: ${this.libroForm.get('titulo')?.value}
+        Idioma: ${this.libroForm.get('idioma')?.value}
+        Autor: ${this.libroForm.get('autor')?.value}
+        Género: ${this.libroForm.get('genero')?.value}
+        Universidad: ${this.libroForm.get('universidad')?.value}
+      `;
+      alert(`Datos del formulario:\n${datosFormulario}`);
+  }
+  
 
-    forkJoin(observables).subscribe(
-      (results: any[]) => {
-        const transformedBooks = results.map(book => ({
-          editorial: book.publishers ? book.publishers.join(', ') : 'N/A',
-          title: book.title,
-          isbn: book.isbn_13 ? book.isbn_13[0] : 'N/A',
-          formatoFisico: book.physical_format || 'N/A',
-          fechaPublicacion: book.publish_date ? book.publish_date : 'N/A',
-          portada: book.covers ? this.apiServiceService.obtenerPortada(book.covers[0]) : '',
-        }));
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    this.selectedFile = file;
+  }
 
+  cargarLibros() {
+   
+  }
 
-        this.topBooks = transformedBooks;
-        this.loading = false;
-        this.obtenerPortadasParaLibros();
-      },
-      error => {
-        console.error('Error al obtener los libros:', error);
-        this.loading = false;
-        this.error = 'Ocurrió un error al obtener los libros.';
+  crearLibro() {
+    if (this.libroForm.valid) {
+      const nuevoLibro = { ...this.libroForm.value };
+      nuevoLibro.pdf = this.selectedFile;
+     
+      this.libros.push(nuevoLibro); 
+      this.libroForm.reset(); 
+    }
+  }
+
+  editarLibro() {
+    if (this.libroSeleccionado) {
+      const libroEditado = { ...this.libroForm.value };
+      libroEditado.pdf = this.selectedFile;
+     
+      const index = this.libros.indexOf(this.libroSeleccionado);
+      if (index !== -1) {
+        this.libros[index] = libroEditado; 
+        this.libroForm.reset(); 
+        this.libroSeleccionado = null;
       }
-    );
+    }
   }
 
 
-  private obtenerPortadasParaLibros(): void {
-    const observables = this.topBooks
-      .filter((libro) => libro.covers)
-      .map((libro) => this.apiServiceService.obtenerPortada(libro.covers[0]));
+  guardarLibro(){
+    alert("Hola");
+  }
 
-    if (observables.length === 0) return;
+  seleccionarLibro(libro: any) {
+    this.libroSeleccionado = libro;
+ 
+    this.libroForm.patchValue({
+      titulo: libro.titulo,
+      idioma: libro.idioma,
+      autor: libro.autor,
+      genero: libro.genero,
+      // pdf: libro.pdf, // No es necesario asignar el valor del archivo aquí
+      universidad: libro.universidad
+    });
+  }
 
-    forkJoin(observables).subscribe(
-      (urls: string[]) => {
-        this.topBooks.forEach((libro, index) => {
-          if (libro.covers) { // Verifica si el libro tiene portadas
-            libro.portada = observables[index];
-
-          }
-        });
-      },
-      (error: any) => {
-        console.error('Error al obtener las portadas de los libros:', error);
+  eliminarLibro() {
+    if (this.libroSeleccionado) {
+      const index = this.libros.indexOf(this.libroSeleccionado);
+      if (index !== -1) {
+        this.libros.splice(index, 1); 
+        this.libroForm.reset(); 
+        this.libroSeleccionado = null; 
       }
-    );
+    }
   }
-
- openDetalleLibroModal(libro: any): void {
-    this.selectedLibro = libro;
-
-  }
-
-
 }

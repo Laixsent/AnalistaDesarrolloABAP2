@@ -18,6 +18,8 @@ export class LoginComponent {
     if (this.usuario && this.contrasena) {
       this.apiService.iniciarSesion(this.usuario, this.contrasena).subscribe(
         (response) => {
+          console.log("Esto es lo que se devuelve", response);
+          
           if (response && response.exitoso) {
             this.router.navigate(['/inicio']);
           } else {

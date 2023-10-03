@@ -30,6 +30,9 @@ import { DetalleLibroBusquedaComponent } from './detalle-libro-busqueda/detalle-
 import { PerfilComponent } from './components/perfil/perfil.component';
 import {MatSliderModule} from '@angular/material/slider';
 import { LoginComponent } from './login/login.component';
+import { MostrarComponent } from './components/mostrar/mostrar.component';
+import { UniversidadesComponent } from './components/universidades/universidades.component';
+import { RegistrarUnisComponent } from './components/registrar-unis/registrar-unis.component';
 
 
 
@@ -42,7 +45,10 @@ import { LoginComponent } from './login/login.component';
     DetalleLibroModalComponent,
     DetalleLibroBusquedaComponent,
     PerfilComponent,
-    LoginComponent
+    LoginComponent,
+    MostrarComponent,
+    UniversidadesComponent,
+    RegistrarUnisComponent
   ],
   imports: [
     AppRoutingModule,

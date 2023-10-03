@@ -7,6 +7,9 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { BuscarComponent } from './components/buscar/buscar.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { LoginComponent } from './login/login.component';
+import { MostrarComponent } from './components/mostrar/mostrar.component';
+import { UniversidadesComponent } from './components/universidades/universidades.component';
+import { RegistrarUnisComponent } from './components/registrar-unis/registrar-unis.component';
 
 
 const routes: Routes = [
@@ -15,7 +18,10 @@ const routes: Routes = [
   { path: 'menu', component: SidenavComponent },
   { path: 'buscar', component: BuscarComponent },
   { path: 'perfil', component: PerfilComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'mostrar', component: MostrarComponent },
+  { path: 'universidades', component: UniversidadesComponent },
+  { path: 'registrarUniversidades', component: RegistrarUnisComponent },
 ];
 
 @NgModule({

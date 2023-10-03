@@ -1,0 +1,64 @@
+<div class="container">
+    <h2>Registro de Universidades</h2>
+    <form>
+      <div class="form-group">
+        <label for="protocolo">Protocolo:</label>
+        <input type="text" id="protocolo" name="protocolo" [(ngModel)]="registro.protocolo">
+      </div>
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" [(ngModel)]="registro.nombre">
+      </div>
+      <div class="form-group">
+        <label for="ip">IP:</label>
+        <input type="text" id="ip" name="ip" [(ngModel)]="registro.ip">
+      </div>
+      <div class="form-group">
+        <label for="base">Base:</label>
+        <input type="text" id="base" name="base" [(ngModel)]="registro.base">
+      </div>
+      <div class="form-group">
+        <label for="ruta">Ruta:</label>
+        <input type="text" id="ruta" name="ruta" [(ngModel)]="registro.ruta">
+      </div>
+      <div class="form-group">
+
+      </div>
+      <button type="submit" (click)="guardar()"*ngIf="modoEdicion">Agregar</button>
+
+
+      <button mat-raised-button color="accent" type="button" *ngIf="!modoEdicion" (click)="actualizar()">Actualizar</button>
+
+      <button mat-raised-button color="warn" type="button" *ngIf="!modoEdicion" (click)="cancelarEditar()">Cancelar</button>
+
+    </form>
+    
+    <h2>Tabla de Registros</h2>
+    <table style="text-align: center; justify-content: center;">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Protocolo</th>
+          <th>Nombre</th>
+          <th>IP</th>
+          <th>Base</th>
+          <th>Ruta</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reg of registros">
+          <td>{{ reg.id }}</td>
+          <td>{{ reg.protocolo }}</td>
+          <td>{{ reg.nombre }}</td>
+          <td>{{ reg.ip }}</td>
+          <td>{{ reg.base }}</td>
+          <td>{{ reg.ruta }}</td>
+          <td>
+            <button mat-icon-button color="primary" (click)="editar(reg)" ><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button color="warn" (click)="eliminar(reg)" ><mat-icon>delete</mat-icon></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

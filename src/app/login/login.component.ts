@@ -17,13 +17,13 @@ export class LoginComponent {
   iniciarSesion() {
     if (this.usuario && this.contrasena) {
       this.apiService.iniciarSesion(this.usuario, this.contrasena).subscribe(
-        (response) => {
-          console.log("Esto es lo que se devuelve", response);
-          
-          if (response && response.exitoso) {
+        (response) => {          
+          if (response) {
+            sessionStorage.setItem('sesionIniciada', response);
             this.router.navigate(['/inicio']);
           } else {
             this.mensajeError = 'Credenciales incorrectas. Inténtalo de nuevo.';
+            sessionStorage.setItem('sesionIniciada', 'false');
           }
         },
         (error) => {

@@ -1,32 +1,50 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { Router } from '@angular/router'; 
+import { ApiServiceService } from '../../service/api-service.service';
+export interface LibroForm {
+  id?: number;
+  title?: string;
+  language?: string;
+  genre?: string;
+  editorial?: string;
+  status?: number;
+  file?: any;
+}
 @Component({
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.css'],
 })
 export class InicioComponent implements OnInit {
-  libroForm: FormGroup;
+  libroForm: any = {
+  } as LibroForm; 
   libros: any[] = [];
   libroSeleccionado: any;
+  mensajeError: string = '';
   selectedFile: File | null = null;
+  modoEdicion: boolean = true; // Indicador para el modo de edición
 
-  constructor(private fb: FormBuilder) {
-    this.libroForm = this.fb.group({
-      titulo: ['', Validators.required],
-      idioma: ['', Validators.required],
-      autor: ['', Validators.required],
-      genero: ['', Validators.required],
-      universidad: ['', Validators.required],
-    });
+  constructor(private router: Router, private apiService: ApiServiceService) {
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (sessionStorage.getItem('sesionIniciada') === "false") {
+      this.router.navigate(['/login']);
+    }
+    this.apiService.mostrarLibros().subscribe(
+      (response) => {          
+        console.log(response);
+        this.libros = response.data;
+      },
+      (error) => {
+        console.error('Error al obtener los libros', error);
+        this.mensajeError = 'Error al registrar. Inténtalo de nuevo más tarde.';
+      }
+    );
+  }
 
   mostrarDatosFormulario() {
-    // Puedes usar esta función para imprimir los datos del formulario
-    console.log(this.libroForm.value);
+    console.log(this.libroForm);
   }
 
   onFileSelected(event: any) {
@@ -35,25 +53,110 @@ export class InicioComponent implements OnInit {
   }
 
   guardarLibro() {
-    if (this.libroForm.valid) {
-      const nuevoLibro = { ...this.libroForm.value };
-      nuevoLibro.pdf = this.selectedFile;
+    if (this.selectedFile) {
+      const nuevoLibro = { ...this.libroForm };
 
-      this.libros.push(nuevoLibro);
-      this.libroForm.reset();
+      const reader = new FileReader();
+      reader.onload = (event: any) => {
+        nuevoLibro.status = 1;
+        nuevoLibro.file = event.target.result;
+        console.log(nuevoLibro.file);
+
+        this.apiService.registrarLibro(nuevoLibro).subscribe(
+          (response) => {
+            this.libroForm = {}; 
+            this.selectedFile = null;
+            this.apiService.mostrarLibros().subscribe(
+              (response) => {          
+                console.log(response);
+                this.libros = response.data;
+              },
+              (error) => {
+                console.error('Error al obtener los libros', error);
+                this.mensajeError = 'Error al registrar. Inténtalo de nuevo más tarde.';
+              }
+            );
+          },
+          (error) => {
+            console.error('Error al registrar', error);
+            this.mensajeError = 'Error al registrar. Inténtalo de nuevo más tarde.';
+          }
+        );
+      };
+      reader.readAsDataURL(this.selectedFile);
     }
   }
 
-  editarLibro() {
-    if (this.libroSeleccionado) {
-      const libroEditado = { ...this.libroForm.value };
-      libroEditado.pdf = this.selectedFile;
+  editarLibro(libro: any) {
+    if (libro) {
+      // console.log('Libro seleccionado:', libro);
+      this.libroForm = null;
+      this.libroForm = {... libro} as LibroForm
+      // console.log(this.libroForm);
+      
+      this.modoEdicion = false;
+    }
+  }
 
-      const index = this.libros.indexOf(this.libroSeleccionado);
-      if (index !== -1) {
-        this.libros[index] = libroEditado;
-        this.libroForm.reset();
-        this.libroSeleccionado = null;
+  cancelarEdicion() {
+    // Reiniciar el objeto libroForm y desactivar el modo de edición
+    this.libroForm = {};
+    this.modoEdicion = true;
+  }
+
+  actualizarLibro() {
+    if (this.libroSeleccionado) {
+      if(!this.selectedFile){
+        this.apiService.actualizarLibro(this.libroForm).subscribe(
+          (response) => {
+            
+            this.libroForm = {};
+            this.modoEdicion = true;
+            this.apiService.mostrarLibros().subscribe(
+                (response) => {          
+                  console.log(response);
+                  this.libros = response.data;
+                },
+                (error) => {
+                  console.error('Error al obtener los libros', error);
+                  this.mensajeError = 'Error al registrar. Inténtalo de nuevo más tarde.';
+                }
+              );
+          },
+          (error) => {
+            console.error('Error al actualizar', error);
+            this.mensajeError = 'Error al actualizar. Inténtalo de nuevo más tarde.';
+          }
+        );
+      }else{
+        const nuevoLibro = { ...this.libroForm };
+        const reader = new FileReader();
+        reader.onload = (event: any) => {
+          nuevoLibro.status = 1;
+          nuevoLibro.file = event.target.result;
+          console.log(nuevoLibro.file);
+
+          this.apiService.actualizarLibro(nuevoLibro).subscribe(
+            (response) => {
+              this.libroForm = {}; 
+              this.selectedFile = null;
+              this.apiService.mostrarLibros().subscribe(
+                (response) => {          
+                  this.libros = response.data;
+                },
+                (error) => {
+                  console.error('Error al obtener los libros', error);
+                  this.mensajeError = 'Error al registrar. Inténtalo de nuevo más tarde.';
+                }
+              );
+            },
+            (error) => {
+              console.error('Error al actualizar', error);
+              this.mensajeError = 'Error al registrar. Inténtalo de nuevo más tarde.';
+            }
+          );
+        };
+        reader.readAsDataURL(this.selectedFile);        
       }
     }
   }
@@ -61,23 +164,36 @@ export class InicioComponent implements OnInit {
   seleccionarLibro(libro: any) {
     this.libroSeleccionado = libro;
 
-    this.libroForm.patchValue({
-      titulo: libro.titulo,
-      idioma: libro.idioma,
-      autor: libro.autor,
-      genero: libro.genero,
-      universidad: libro.universidad,
-    });
+    // Si estamos en modo de edición, cancelarlo
+    if (this.modoEdicion) {
+      this.cancelarEdicion();
+    }
   }
 
-  eliminarLibro() {
-    if (this.libroSeleccionado) {
-      const index = this.libros.indexOf(this.libroSeleccionado);
-      if (index !== -1) {
-        this.libros.splice(index, 1);
-        this.libroForm.reset();
-        this.libroSeleccionado = null;
-      }
+  eliminarLibro(libro: any) {
+    if (libro) {
+      // console.log('Libro seleccionado:', libro);
+      this.apiService.eliminarLibro({id: libro.id}).subscribe(
+        (response) => {
+          
+          // this.libroForm = {};
+          // this.modoEdicion = true;
+          this.apiService.mostrarLibros().subscribe(
+              (response) => {          
+                // console.log(response);
+                this.libros = response.data;
+              },
+              (error) => {
+                console.error('Error al obtener los libros', error);
+                this.mensajeError = 'Error al registrar. Inténtalo de nuevo más tarde.';
+              }
+            );
+        },
+        (error) => {
+          console.error('Error al actualizar', error);
+          this.mensajeError = 'Error al actualizar. Inténtalo de nuevo más tarde.';
+        }
+      );
     }
   }
 }

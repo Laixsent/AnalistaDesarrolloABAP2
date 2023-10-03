@@ -2,11 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Max-Disk-Usage': '10mb', // Establece el límite de carga aquí
+  }),
+};
 @Injectable({
   providedIn: 'root'
 })
 export class ApiServiceService {
-  private apiUrl = 'http://192.168.1.10:3000/api/login/';
+  
     
   constructor(private http: HttpClient) { }
 
@@ -23,12 +29,60 @@ export class ApiServiceService {
   }  
 
   iniciarSesion(usuario: string, contrasena: string): Observable<any> {
-    // No incluyas el objeto 'body' en la URL
-    const url = this.apiUrl;
+    const url = 'http://localhost:3000/api/login/';
+    const body = { usuario, contrasena };
+    return this.http.post<any>(url, body);
+  }
 
-    console.log("Esto es lo que está llegando, usuario: ", usuario, " contraseña: ", contrasena);
+  registrarLibro(nuevoLibro: any): Observable<any> {
+    // console.log(nuevoLibro);    
+    const url = 'http://localhost:3000/api/libros/';    
+    return this.http.post<any>(url, nuevoLibro);
+  }
 
-    // Realiza una solicitud GET a la URL 'http://192.168.1.10:3000/api/login/'
+  actualizarLibro(nuevoLibro: any): Observable<any> {
+    console.log(nuevoLibro);    
+    const url = 'http://localhost:3000/api/libros/editar';    
+    return this.http.post<any>(url, nuevoLibro);
+  }
+
+  eliminarLibro(nuevoLibro: any): Observable<any> {
+    console.log("Este es el identificador: -->",nuevoLibro);    
+    const url = 'http://localhost:3000/api/libros/eliminar';    
+    return this.http.post<any>(url, nuevoLibro);
+  }
+
+  mostrarLibros(): Observable<any> {
+    const url = 'http://localhost:3000/api/libros/';    
     return this.http.get<any>(url);
   }
+
+  mostrarLibrosOtros(): Observable<any> {
+    const url = 'https://cors-anywhere.herokuapp.com/http://8.tcp.us-cal-1.ngrok.io:19217/tiendita/libros';    
+    return this.http.get<any>(url);
+  }
+
+  // UNIVERSIDADES
+  obtenerRutas(): Observable<any> {
+    const url = 'http://localhost:3000/api/universidades/';    
+    return this.http.get<any>(url);
+  }
+
+  registrarUniversidad(registro: any): Observable<any> {
+    // console.log(nuevoLibro);    
+    const url = 'http://localhost:3000/api/universidades/';    
+    return this.http.post<any>(url, registro);
+  }
+
+  actualizarUniversidad(registro: any): Observable<any> {
+    console.log(registro);    
+    const url = 'http://localhost:3000/api/universidades/editar';    
+    return this.http.post<any>(url, registro);
+  }
+
+  eliminarUniversidad(registro: any): Observable<any> {
+    const url = 'http://localhost:3000/api/universidades/eliminar';    
+    return this.http.post<any>(url, registro);
+  }
+  
 }

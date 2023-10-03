@@ -1,0 +1,20 @@
+<p>universidades works!</p>
+<div class="card-container">
+    <div class="card" *ngFor="let libro of libros">
+      <div class="card-header">
+        <h2>{{ libro.titulo }}</h2>
+      </div>
+      <div class="card-body">
+        <p><strong>Categoria:</strong> {{ libro.categoria }}</p>
+        <p><strong>Autor:</strong> {{ libro.autor }}</p>
+        <p><strong>Año:</strong> {{ libro.anio }}</p>
+        <!-- Agrega más detalles del libro si es necesario -->
+      </div>
+      <div class="card-footer">
+        <a href="javascript:void(0);" (click)="abrirPdf(libro.pdf)" class="pdf-link">Abrir PDF</a>
+      </div>
+      <!-- Contenedor para mostrar el PDF -->
+    </div>
+  </div>
+  <div id="pdf-container"></div>
+  

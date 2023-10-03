@@ -50,7 +50,7 @@ td button:hover {
 /* Estilo para el encabezado de la tabla */
 thead {
   background-color: #333;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 /* Estilo para las filas impares de la tabla */
@@ -60,4 +60,17 @@ tbody tr:nth-child(odd) {
 
 th[_ngcontent-ng-c532549225] {
   background-color: #5e5454;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  text-align: center;
 }

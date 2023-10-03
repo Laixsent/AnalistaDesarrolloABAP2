@@ -1,32 +1,33 @@
-  <form [formGroup]="libroForm" (ngSubmit)="guardarLibro()">
+<div class="container">
+  <h2>Registro de Libros</h2>
+  <form>
     <mat-card>
       <mat-card-header>
         <mat-card-title>Nuevos Libros</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <mat-form-field>
-          <input matInput placeholder="Título" formControlName="titulo" required>
+          <input matInput placeholder="Título" [(ngModel)]="libroForm.title" name="title">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Idioma" formControlName="idioma" required>
+          <input matInput placeholder="Idioma" [(ngModel)]="libroForm.language" name="language">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Autor" formControlName="autor" required>
+          <input matInput placeholder="Género" [(ngModel)]="libroForm.genre" name="genre">
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Género" formControlName="genero" required>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Universidad" formControlName="universidad" required>
+          <input matInput placeholder="Editorial" [(ngModel)]="libroForm.editorial" name="editorial">
         </mat-form-field>
         <div class="form-group">
           <label for="pdf">PDF:</label>
-          <input type="file" id="pdf" (change)="onFileSelected($event)" accept=".pdf" required>
+          <input type="file" id="pdf" (change)="onFileSelected($event)" accept=".pdf">
         </div>
       </mat-card-content>
       <mat-card-actions>
-        <!-- <button mat-raised-button color="primary" type="button" (click)="mostrarDatosFormulario()">Mostrar Datos</button> -->
-        <button mat-raised-button color="primary" type="submit">Guardar</button>
+        <!-- Mostrar o ocultar botones según el modo de edición -->
+        <button mat-raised-button color="primary" type="button" *ngIf="modoEdicion" (click)="guardarLibro()">Guardar</button>
+        <button mat-raised-button color="accent" type="button" *ngIf="!modoEdicion" (click)="actualizarLibro()">Actualizar</button>
+        <button mat-raised-button color="warn" type="button" *ngIf="!modoEdicion" (click)="cancelarEdicion()">Cancelar</button>
       </mat-card-actions>
     </mat-card>
   </form>
@@ -36,23 +37,22 @@
       <tr>
         <th>Título</th>
         <th>Idioma</th>
-        <th>Autor</th>
         <th>Género</th>
-        <th>Universidad</th>
+        <th>Editorial</th>
         <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let libro of libros" (click)="seleccionarLibro(libro)">
-        <td>{{ libro.titulo }}</td>
-        <td>{{ libro.idioma }}</td>
-        <td>{{ libro.autor }}</td>
-        <td>{{ libro.genero }}</td>
-        <td>{{ libro.universidad }}</td>
+        <td>{{ libro.title }}</td>
+        <td>{{ libro.language }}</td>
+        <td>{{ libro.genre }}</td>
+        <td>{{ libro.editorial }}</td>
         <td>
-          <button mat-icon-button color="primary" (click)="editarLibro()"><mat-icon>edit</mat-icon></button>
-          <button mat-icon-button color="warn" (click)="eliminarLibro()"><mat-icon>delete</mat-icon></button>
+          <button mat-icon-button color="primary" (click)="editarLibro(libro)"><mat-icon>edit</mat-icon></button>
+          <button mat-icon-button color="warn" (click)="eliminarLibro(libro)"><mat-icon>delete</mat-icon></button>
         </td>
       </tr>
     </tbody>
   </table>
+</div>

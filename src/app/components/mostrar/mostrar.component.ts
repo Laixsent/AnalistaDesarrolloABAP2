@@ -27,43 +27,27 @@ export class MostrarComponent {
 
   abrirPdf(base64Data: string): void {
     const container = document.getElementById('pdf-container'); 
-  
-      if (container) {
-        // Limpiar cualquier contenido previo en el contenedor
-    container.innerHTML = '';
+    if (container) {
+      container.innerHTML = '';
+      var pdfObject = document.createElement('object');
+      pdfObject.style.width = '100%';
+      pdfObject.style.height = '550pt';
+      pdfObject.type = 'application/pdf';
+      pdfObject.data = base64Data;
+      container.appendChild(pdfObject);
+    }
 
-    // Crear un objeto <object> para mostrar el PDF
-    var pdfObject = document.createElement('object');
-    pdfObject.style.width = '100%';
-    pdfObject.style.height = '550pt';
-    pdfObject.type = 'application/pdf';
-    pdfObject.data = base64Data;
-
-    // Agregar el objeto al contenedor del modal
-    container.appendChild(pdfObject);
-      }
-
+    // Abre el archivo en una nueva pestaña del navegador
+    window.open(base64Data, '_blank');
   }  
 
   
-
-//   function cargarPDFEnModal(base64) {
-    
-//     var containerPDF = document.getElementById('containerPDF');
-
-//     // Limpiar cualquier contenido previo en el contenedor
-//     containerPDF.innerHTML = '';
-
-//     // Crear un objeto <object> para mostrar el PDF
-//     var pdfObject = document.createElement('object');
-//     pdfObject.style.width = '100%';
-//     pdfObject.style.height = '550pt';
-//     pdfObject.type = 'application/pdf';
-//     pdfObject.data = base64;
-
-//     // Agregar el objeto al contenedor del modal
-//     containerPDF.appendChild(pdfObject);
-// }
-  
+  descargarPdf(base64Data: string): void {
+    const blob = new Blob([base64Data], {type: 'application/pdf'});
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = 'archivo.pdf';
+    link.click();
+  }
   
 }

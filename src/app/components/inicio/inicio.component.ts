@@ -31,6 +31,10 @@ export class InicioComponent implements OnInit {
     if (sessionStorage.getItem('sesionIniciada') === "false") {
       this.router.navigate(['/login']);
     }
+    this.mostrar();
+  }
+
+  mostrar(){
     this.apiService.mostrarLibros().subscribe(
       (response) => {          
         console.log(response);
@@ -66,16 +70,7 @@ export class InicioComponent implements OnInit {
           (response) => {
             this.libroForm = {}; 
             this.selectedFile = null;
-            this.apiService.mostrarLibros().subscribe(
-              (response) => {          
-                console.log(response);
-                this.libros = response.data;
-              },
-              (error) => {
-                console.error('Error al obtener los libros', error);
-                this.mensajeError = 'Error al registrar. Inténtalo de nuevo más tarde.';
-              }
-            );
+            this.mostrar();
           },
           (error) => {
             console.error('Error al registrar', error);
@@ -89,17 +84,13 @@ export class InicioComponent implements OnInit {
 
   editarLibro(libro: any) {
     if (libro) {
-      // console.log('Libro seleccionado:', libro);
       this.libroForm = null;
       this.libroForm = {... libro} as LibroForm
-      // console.log(this.libroForm);
-      
       this.modoEdicion = false;
     }
   }
 
   cancelarEdicion() {
-    // Reiniciar el objeto libroForm y desactivar el modo de edición
     this.libroForm = {};
     this.modoEdicion = true;
   }
@@ -108,20 +99,10 @@ export class InicioComponent implements OnInit {
     if (this.libroSeleccionado) {
       if(!this.selectedFile){
         this.apiService.actualizarLibro(this.libroForm).subscribe(
-          (response) => {
-            
+          (response) => {            
             this.libroForm = {};
             this.modoEdicion = true;
-            this.apiService.mostrarLibros().subscribe(
-                (response) => {          
-                  console.log(response);
-                  this.libros = response.data;
-                },
-                (error) => {
-                  console.error('Error al obtener los libros', error);
-                  this.mensajeError = 'Error al registrar. Inténtalo de nuevo más tarde.';
-                }
-              );
+            this.mostrar();
           },
           (error) => {
             console.error('Error al actualizar', error);
@@ -134,21 +115,13 @@ export class InicioComponent implements OnInit {
         reader.onload = (event: any) => {
           nuevoLibro.status = 1;
           nuevoLibro.file = event.target.result;
-          console.log(nuevoLibro.file);
 
           this.apiService.actualizarLibro(nuevoLibro).subscribe(
             (response) => {
               this.libroForm = {}; 
               this.selectedFile = null;
-              this.apiService.mostrarLibros().subscribe(
-                (response) => {          
-                  this.libros = response.data;
-                },
-                (error) => {
-                  console.error('Error al obtener los libros', error);
-                  this.mensajeError = 'Error al registrar. Inténtalo de nuevo más tarde.';
-                }
-              );
+              this.modoEdicion = true;
+              this.mostrar();
             },
             (error) => {
               console.error('Error al actualizar', error);
@@ -163,8 +136,6 @@ export class InicioComponent implements OnInit {
 
   seleccionarLibro(libro: any) {
     this.libroSeleccionado = libro;
-
-    // Si estamos en modo de edición, cancelarlo
     if (this.modoEdicion) {
       this.cancelarEdicion();
     }
@@ -172,15 +143,10 @@ export class InicioComponent implements OnInit {
 
   eliminarLibro(libro: any) {
     if (libro) {
-      // console.log('Libro seleccionado:', libro);
       this.apiService.eliminarLibro({id: libro.id}).subscribe(
         (response) => {
-          
-          // this.libroForm = {};
-          // this.modoEdicion = true;
           this.apiService.mostrarLibros().subscribe(
               (response) => {          
-                // console.log(response);
                 this.libros = response.data;
               },
               (error) => {

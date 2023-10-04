@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
     'Max-Disk-Usage': '10mb', // Establece el límite de carga aquí
   }),
+  timeout: 20000,
 };
 @Injectable({
   providedIn: 'root'
@@ -15,7 +18,7 @@ export class ApiServiceService {
   
     
   constructor(private http: HttpClient) { }
-
+  //OTROS
   public buscar(busqueda: string): Observable<any> {
     return this.http.get<any>(`https://openlibrary.org/search.json?q=${busqueda}&fields=*,availability&limit=50`);
   }
@@ -27,13 +30,13 @@ export class ApiServiceService {
   public obtenerTopLibros(bookId: string): Observable<any> {
     return this.http.get<any>(`/book/${bookId}.json`);
   }  
-
+  // USUARIOS
   iniciarSesion(usuario: string, contrasena: string): Observable<any> {
     const url = 'http://localhost:3000/api/login/';
     const body = { usuario, contrasena };
     return this.http.post<any>(url, body);
   }
-
+  //LIBROS
   registrarLibro(nuevoLibro: any): Observable<any> {
     // console.log(nuevoLibro);    
     const url = 'http://localhost:3000/api/libros/';    
@@ -57,10 +60,17 @@ export class ApiServiceService {
     return this.http.get<any>(url);
   }
 
-  mostrarLibrosOtros(): Observable<any> {
-    const url = 'https://cors-anywhere.herokuapp.com/http://8.tcp.us-cal-1.ngrok.io:19217/tiendita/libros';    
-    return this.http.get<any>(url);
+  // MOSTAR OTRAS UNIVERSIDADES
+  mostrarLibrosOtros(url: string): Observable<any> {
+    return this.http.get(url, httpOptions)
+      .pipe(
+        catchError(error => {
+          console.error('Error en la solicitud:', error);
+          return throwError(error);
+        })
+      );
   }
+  // http://8.tcp.us-cal-1.ngrok.io:19217/tiendita/libros
 
   // UNIVERSIDADES
   obtenerRutas(): Observable<any> {

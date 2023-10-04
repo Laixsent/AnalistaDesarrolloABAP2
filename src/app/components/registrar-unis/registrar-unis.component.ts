@@ -6,6 +6,7 @@ interface Registro {
   protocolo?: string;
   nombre?: string;
   ip?: string;
+  puerto?: string;
   base?: string;
   ruta?: string;
 }
@@ -46,7 +47,15 @@ export class RegistrarUnisComponent {
   }
 
   guardar() {
-    // console.log(this.registro);
+    let registro = {
+      protocolo: this.registro.protocolo, 
+      nombre: this.registro.nombre, 
+      ip: this.registro.ip, 
+      puerto: this.registro.puerto? this.registro.puerto: null, 
+      base: this.registro.base, 
+      ruta: this.registro.ruta, 
+    }
+    // console.log(registro);
     this.apiService.registrarUniversidad(this.registro).subscribe(
       (response) => {
         this.registro = {};

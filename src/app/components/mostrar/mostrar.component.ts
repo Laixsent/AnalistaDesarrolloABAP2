@@ -36,18 +36,41 @@ export class MostrarComponent {
       pdfObject.data = base64Data;
       container.appendChild(pdfObject);
     }
-
-    // Abre el archivo en una nueva pestaña del navegador
     window.open(base64Data, '_blank');
   }  
 
   
+  // descargarPdf(base64Data: string): void {
+  //   const blob = new Blob([base64Data], {type: 'application/pdf'});
+  //   const link = document.createElement('a');
+  //   link.href = window.URL.createObjectURL(blob);
+  //   link.download = 'archivo.pdf';
+  //   link.click();
+  // }
   descargarPdf(base64Data: string): void {
-    const blob = new Blob([base64Data], {type: 'application/pdf'});
+    const blob = new Blob([base64Data], { type: 'application/pdf' });
+    const blobUrl = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-    link.download = 'archivo.pdf';
-    link.click();
-  }
+    // Crea un objeto <object> para abrir el PDF en una nueva ventana
+    const pdfObject = document.createElement('object');
+    pdfObject.style.display = 'none'; // Oculta el objeto
+    pdfObject.type = 'application/pdf';
+    pdfObject.data = blobUrl;
   
+    // Agrega el objeto al cuerpo del documento
+    document.body.appendChild(pdfObject);
+  
+    // Abre el archivo en una nueva pestaña del navegador
+    window.open(base64Data, '_blank');
+  
+    // Limpia el objeto después de abrirlo
+    pdfObject.onload = () => {
+      link.href = window.URL.createObjectURL(blob);
+      // document.body.removeChild(pdfObject);
+      link.download = blobUrl;
+      link.click();
+    };
+    
+  }
+
 }

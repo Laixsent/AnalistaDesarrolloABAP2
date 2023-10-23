@@ -26,7 +26,7 @@ export class UniversidadesComponent {
   obtenerApis(){
     this.apiService.obtenerRutas().subscribe(
       (response) => {          
-        // console.log(response.data);
+        console.log(response.data);
         for (const key in response.data) {
           let endpoint
           if(response.data[key].puerto){

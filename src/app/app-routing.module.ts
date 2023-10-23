@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { MostrarComponent } from './components/mostrar/mostrar.component';
 import { UniversidadesComponent } from './components/universidades/universidades.component';
 import { RegistrarUnisComponent } from './components/registrar-unis/registrar-unis.component';
+import { SistemaCentralComponent } from './components/sistema-central/sistema-central.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'mostrar', component: MostrarComponent },
   { path: 'universidades', component: UniversidadesComponent },
   { path: 'registrarUniversidades', component: RegistrarUnisComponent },
+  { path: 'central', component: SistemaCentralComponent },
 ];
 
 @NgModule({

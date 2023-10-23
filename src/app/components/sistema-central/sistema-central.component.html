@@ -1,0 +1,33 @@
+<div class="container">
+    <h2>Busqueda en central</h2>
+    <form>
+      <div class="form-group">
+        <label for="filtro">Bucar</label>
+        <input type="text" id="filtro" name="filtro" [(ngModel)]="registro.filtro">
+      </div>
+      <div class="form-group">
+          <button type="submit" *ngIf="modoEdicion" 
+          (click)="autocompleteCentral()">Bucar</button>
+      </div>
+      <button mat-raised-button color="accent" type="button" *ngIf="!modoEdicion">Actualizar</button>
+      <button mat-raised-button color="warn" type="button" *ngIf="!modoEdicion" >Cancelar</button>
+    </form>    
+  </div>
+  <div class="card-container">
+    <div class="card" *ngFor="let libro of libros" (click)="recuperarCentral(libro)">
+      <div class="card-header">
+        <h2>{{ libro.libro_nombre }}</h2>
+        <h3>{{ libro.nombre_universidad }}</h3>
+      </div>
+      <div class="card-body">
+        <p><strong>Tema:</strong> {{ libro.tema }}</p>
+        <p><strong>ID de universidad:</strong> {{ libro.universidad_id }}</p>
+        <p><strong>Univerdidad libro id:</strong> {{ libro.universidad_libro_id }}</p>
+        </div>
+      <!-- <div class="card-footer">
+        <a href="javascript:void(0);" (click)="abrirPdf(libro.file)" class="pdf-link">Abrir PDF</a>
+        <br>
+        <a href="javascript:void(0);" (click)="descargarPdf(libro.file)" class="pdf-link">Descargar PDF</a>
+      </div> -->
+    </div>
+  </div>

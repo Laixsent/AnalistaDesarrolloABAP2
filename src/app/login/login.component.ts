@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
 import { ApiServiceService } from '../service/api-service.service';
 
@@ -13,6 +13,18 @@ export class LoginComponent {
   mensajeError: string = '';
 
   constructor(private apiService: ApiServiceService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.apiService.insertar().subscribe(
+    // this.apiService.consultar().subscribe(
+      (response) => {          
+        console.log(response);        
+      },
+      (error) => {
+        console.error('Error al iniciar sesión', error);
+      }
+    );
+  }
 
   iniciarSesion() {
     if (this.usuario && this.contrasena) {

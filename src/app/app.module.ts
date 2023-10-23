@@ -33,6 +33,7 @@ import { LoginComponent } from './login/login.component';
 import { MostrarComponent } from './components/mostrar/mostrar.component';
 import { UniversidadesComponent } from './components/universidades/universidades.component';
 import { RegistrarUnisComponent } from './components/registrar-unis/registrar-unis.component';
+import { SistemaCentralComponent } from './components/sistema-central/sistema-central.component';
 
 
 
@@ -48,7 +49,8 @@ import { RegistrarUnisComponent } from './components/registrar-unis/registrar-un
     LoginComponent,
     MostrarComponent,
     UniversidadesComponent,
-    RegistrarUnisComponent
+    RegistrarUnisComponent,
+    SistemaCentralComponent
   ],
   imports: [
     AppRoutingModule,

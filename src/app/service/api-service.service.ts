@@ -126,18 +126,7 @@ export class ApiServiceService {
     const apiUrl = `${url}?email=${email}`;
   
     return this.http.get<any>(apiUrl);
-  }
-
-  // consultar(): Observable<any> {
-  //   const url = 'http://127.0.0.1:3000/api/login/administrador';
-  //   const email = "jessy@gmail.com";
-  
-  //   const body = { email }; // Objeto con los datos que deseas enviar en el cuerpo
-  
-  //   return this.http.post<any>(url, body);
-  // }
-  
-  
+  }  
 
   insertar(): Observable<any> {
 
@@ -161,6 +150,18 @@ export class ApiServiceService {
       password: "password",
       email: "erick@gmail.com",
       user_type: 1
+  } 
+    return this.http.post<any>(url, obj);
+  }
+
+  recuperar(): Observable<any> {
+
+    const url = 'http://127.0.0.1:3000/api/login/recuperar';   
+    let obj = {
+      // name: "Adrian",
+      password: "password",
+      email: "erick@gmail.com",
+      // user_type: 1
   } 
     return this.http.post<any>(url, obj);
   }

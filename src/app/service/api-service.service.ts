@@ -145,8 +145,22 @@ export class ApiServiceService {
     let obj = {
       name: "name",
       password: "password",
-      email: "email5",
-      user_type: "1"
+      email: "email1@gmail.com",
+      type: "administrador"
+      // type: "cliente",
+      // type: "vendedor",
+  } 
+    return this.http.post<any>(url, obj);
+  }
+
+  actualizar(): Observable<any> {
+
+    const url = 'http://127.0.0.1:3000/api/login/actualizar';   
+    let obj = {
+      name: "Adrian",
+      password: "password",
+      email: "erick@gmail.com",
+      user_type: 1
   } 
     return this.http.post<any>(url, obj);
   }

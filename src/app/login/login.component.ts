@@ -15,6 +15,7 @@ export class LoginComponent {
   constructor(private apiService: ApiServiceService, private router: Router) {}
 
   ngOnInit(): void {
+    // this.apiService.actualizar().subscribe(
     this.apiService.insertar().subscribe(
     // this.apiService.consultar().subscribe(
       (response) => {          

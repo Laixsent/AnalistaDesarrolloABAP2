@@ -15,10 +15,10 @@ export class LoginComponent {
   constructor(private apiService: ApiServiceService, private router: Router) {}
 
   ngOnInit(): void {
-    this.apiService.recuperar().subscribe(
+    // this.apiService.recuperar().subscribe(
     // this.apiService.actualizar().subscribe(
     // this.apiService.insertar().subscribe(
-    // this.apiService.consultar().subscribe(
+    this.apiService.consultar().subscribe(
       (response) => {          
         console.log(response);        
       },

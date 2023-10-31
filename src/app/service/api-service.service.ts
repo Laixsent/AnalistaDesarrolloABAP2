@@ -122,7 +122,7 @@ export class ApiServiceService {
   //POSTMAN
   consultar(): Observable<any> {
     const url = 'http://127.0.0.1:3000/api/login/administrador';
-    const email = "omar@gmail.com";
+    const email = "erick@gmail.com";
     const apiUrl = `${url}?email=${email}`;
   
     return this.http.get<any>(apiUrl);

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiServiceService } from '../../service/api-service.service';
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-mostrar',
@@ -10,19 +11,23 @@ export class MostrarComponent {
   mensajeError: string = '';
   libros: any[] = [];
 
-  constructor(private apiService: ApiServiceService) {}
+  constructor(private apiService: ApiServiceService,private router: Router) {}
 
   ngOnInit(): void {
-    this.apiService.mostrarLibros().subscribe(
-      (response) => {          
-        console.log(response);
-        this.libros = response.data;
-      },
-      (error) => {
-        console.error('Error al obtener los libros', error);
-        this.mensajeError = 'Error al registrar. Inténtalo de nuevo más tarde.';
-      }
-    );
+    if (!sessionStorage.getItem('sesionIniciada')) {
+      this.router.navigate(['/login']);
+    }else{
+      this.apiService.mostrarLibros().subscribe(
+        (response) => {          
+          console.log(response);
+          this.libros = response.data;
+        },
+        (error) => {
+          console.error('Error al obtener los libros', error);
+          this.mensajeError = 'Error al registrar. Inténtalo de nuevo más tarde.';
+        }
+      );
+    }
   }
 
   abrirPdf(base64Data: string): void {

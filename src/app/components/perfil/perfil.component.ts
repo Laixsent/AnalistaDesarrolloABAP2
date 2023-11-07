@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-perfil',
@@ -11,12 +12,17 @@ export class PerfilComponent {
   editingBook: any | null = null;
   editingValue: number | null = null; // Agrega esta propiedad
 
-
-
+  constructor(
+    private router: Router
+    ){}
 
   ngOnInit(): void {
-    const storedBooks = JSON.parse(localStorage.getItem('storedBooks') || '[]');
-    this.storedBooks = storedBooks;
+    if (!sessionStorage.getItem('sesionIniciada')) {
+      this.router.navigate(['/login']);
+    }else{
+      const storedBooks = JSON.parse(localStorage.getItem('storedBooks') || '[]');
+      this.storedBooks = storedBooks;
+    }
 
   }
 

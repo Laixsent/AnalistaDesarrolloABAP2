@@ -21,14 +21,19 @@ export class RegistrarUnisComponent {
   mensajeError: string = '';
   registro: Registro = {};
   modoEdicion: boolean = true; // Indicador para el modo de edición
-
+  nivelDeAcceso!: any;
   constructor(private router: Router, private apiService: ApiServiceService) {
 
   }
 
   ngOnInit(): void {
-    if (sessionStorage.getItem('sesionIniciada') === "false") {
+    if (!sessionStorage.getItem('sesionIniciada')) {
       this.router.navigate(['/login']);
+    }
+    
+    this.nivelDeAcceso = sessionStorage.getItem('sesionIniciada');
+    if (JSON.parse(this.nivelDeAcceso).access === 2){
+      this.router.navigate(['/buscar']);
     }
     this.mostrar();
   }

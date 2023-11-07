@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiServiceService } from "../../service/api-service.service";
 import { libro } from 'src/app/modelos/libro';
 import { forkJoin } from 'rxjs';
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-buscar',
@@ -16,12 +17,17 @@ export class BuscarComponent implements OnInit {
 
 
   constructor(
-    private apiServiceService: ApiServiceService
+    private apiServiceService: ApiServiceService,
+    private router: Router
     ){
   }
 
   ngOnInit(): void {
-     this.obtenerlibros(); // Llamar al método para obtener los libros al inicializar el componente
+    if (!sessionStorage.getItem('sesionIniciada')) {
+      this.router.navigate(['/login']);
+    }else{
+      this.obtenerlibros(); // Llamar al método para obtener los libros al inicializar el componente
+    }
 
   }
 

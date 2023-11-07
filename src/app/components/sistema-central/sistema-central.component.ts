@@ -22,7 +22,7 @@ export class SistemaCentralComponent {
   }
 
   ngOnInit(): void {
-    if (sessionStorage.getItem('sesionIniciada') === "false") {
+    if (!sessionStorage.getItem('sesionIniciada')) {
       this.router.navigate(['/login']);
     }
     this.mostrar();

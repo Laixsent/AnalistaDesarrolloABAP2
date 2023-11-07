@@ -16,7 +16,7 @@ export class UniversidadesComponent {
   }
 
   ngOnInit(): void {
-    if (sessionStorage.getItem('sesionIniciada') === "false") {
+    if (!sessionStorage.getItem('sesionIniciada')) {
       this.router.navigate(['/login']);
     }
     this.obtenerApis();    

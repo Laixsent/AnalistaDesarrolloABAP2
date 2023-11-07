@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
 import { ApiServiceService } from '../service/api-service.service';
+// SNACK-BAR
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -12,20 +14,20 @@ export class LoginComponent {
   contrasena: string = '';
   mensajeError: string = '';
 
-  constructor(private apiService: ApiServiceService, private router: Router) {}
+  constructor(private apiService: ApiServiceService, private router: Router,private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     // this.apiService.recuperar().subscribe(
     // this.apiService.actualizar().subscribe(
     // this.apiService.insertar().subscribe(
-    this.apiService.consultar().subscribe(
-      (response) => {          
-        console.log(response);        
-      },
-      (error) => {
-        console.error('Error al iniciar sesión', error);
-      }
-    );
+    // this.apiService.consultar().subscribe(
+    //   (response) => {          
+    //     console.log(response);        
+    //   },
+    //   (error) => {
+    //     console.error('Error al iniciar sesión', error);
+    //   }
+    // );
   }
 
   iniciarSesion() {
@@ -33,8 +35,14 @@ export class LoginComponent {
       this.apiService.iniciarSesion(this.usuario, this.contrasena).subscribe(
         (response) => {          
           if (response) {
-            sessionStorage.setItem('sesionIniciada', response);
-            this.router.navigate(['/inicio']);
+            console.log(response);
+            if(response.status !== 1){
+              this._snackBar.open(response.message, "Aceptar",{duration: 3000});
+            }else{
+              sessionStorage.setItem('sesionIniciada', JSON.stringify(response.data));
+              this.router.navigate(['/buscar']);
+            }         
+            
           } else {
             this.mensajeError = 'Credenciales incorrectas. Inténtalo de nuevo.';
             sessionStorage.setItem('sesionIniciada', 'false');

@@ -34,9 +34,9 @@ export class ApiServiceService {
     return this.http.get<any>(`/book/${bookId}.json`);
   }  
   // USUARIOS
-  iniciarSesion(usuario: string, contrasena: string): Observable<any> {
+  iniciarSesion(email: string, contrasena: string): Observable<any> {
     const url = 'http://localhost:3000/api/login/';
-    const body = { usuario, contrasena };
+    const body = { email, contrasena };
     return this.http.post<any>(url, body);
   }
   //LIBROS

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
 import { ApiServiceService } from '../../service/api-service.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 export interface LibroForm {
   id?: number;
   title?: string;
@@ -24,7 +25,7 @@ export class InicioComponent implements OnInit {
   selectedFile: File | null = null;
   modoEdicion: boolean = true; // Indicador para el modo de edición
   nivelDeAcceso!: any;
-  constructor(private router: Router, private apiService: ApiServiceService) {
+  constructor(private router: Router, private apiService: ApiServiceService, private _snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {    
@@ -42,7 +43,7 @@ export class InicioComponent implements OnInit {
   mostrar(){
     this.apiService.mostrarLibros().subscribe(
       (response) => {          
-        console.log(response);
+        // console.log(response);
         this.libros = response.data;
       },
       (error) => {
@@ -69,10 +70,11 @@ export class InicioComponent implements OnInit {
       reader.onload = (event: any) => {
         nuevoLibro.status = 1;
         nuevoLibro.file = event.target.result;
-        console.log(nuevoLibro.file);
+        // console.log(nuevoLibro.file);
 
         this.apiService.registrarLibro(nuevoLibro).subscribe(
           (response) => {
+            this._snackBar.open(response.message, "Aceptar",{duration: 3000});
             this.libroForm = {}; 
             this.selectedFile = null;
             this.mostrar();
@@ -84,6 +86,8 @@ export class InicioComponent implements OnInit {
         );
       };
       reader.readAsDataURL(this.selectedFile);
+    }else{
+      this._snackBar.open("Seleccione una imagen", "Aceptar",{duration: 3000});
     }
   }
 
@@ -104,7 +108,8 @@ export class InicioComponent implements OnInit {
     if (this.libroSeleccionado) {
       if(!this.selectedFile){
         this.apiService.actualizarLibro(this.libroForm).subscribe(
-          (response) => {            
+          (response) => {     
+            this._snackBar.open(response.message, "Aceptar",{duration: 3000});      
             this.libroForm = {};
             this.modoEdicion = true;
             this.mostrar();
@@ -150,15 +155,9 @@ export class InicioComponent implements OnInit {
     if (libro) {
       this.apiService.eliminarLibro({id: libro.id}).subscribe(
         (response) => {
-          this.apiService.mostrarLibros().subscribe(
-              (response) => {          
-                this.libros = response.data;
-              },
-              (error) => {
-                console.error('Error al obtener los libros', error);
-                this.mensajeError = 'Error al registrar. Inténtalo de nuevo más tarde.';
-              }
-            );
+          console.log(response);
+          this._snackBar.open(response.message, "Aceptar",{duration: 3000});      
+          this.mostrar();
         },
         (error) => {
           console.error('Error al actualizar', error);

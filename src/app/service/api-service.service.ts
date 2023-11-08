@@ -53,7 +53,7 @@ export class ApiServiceService {
   }
 
   eliminarLibro(nuevoLibro: any): Observable<any> {
-    console.log("Este es el identificador: -->",nuevoLibro);    
+    // console.log("Este es el identificador: -->",nuevoLibro);    
     const url = 'http://localhost:3000/api/libros/eliminar';    
     return this.http.post<any>(url, nuevoLibro);
   }
@@ -61,6 +61,11 @@ export class ApiServiceService {
   mostrarLibros(): Observable<any> {
     const url = 'http://localhost:3000/api/libros/';    
     return this.http.get<any>(url);
+  }
+
+  mostrarLibrosView(libro: any): Observable<any> {
+    const url = 'http://localhost:3000/api/libros/view';    
+    return this.http.post<any>(url, libro);
   }
 
   // MOSTAR OTRAS UNIVERSIDADES

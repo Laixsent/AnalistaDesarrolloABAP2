@@ -1,6 +1,6 @@
 <div class="card-container">
   <div class="card" *ngFor="let libro of libros">
-    <div class="card-header">
+    <div class="card-header" (click)="openDetalleLibroModal(libro)">
       <h2>{{ libro.title }}</h2>
     </div>
     <div class="card-body">
@@ -15,3 +15,9 @@
     </div>
   </div>
 </div>
+
+<app-modal-detalle
+  *ngIf="selectedLibro"
+  [libro]="selectedLibro"
+  (cerrarModal)="selectedLibro = null">
+</app-modal-detalle>

@@ -1,0 +1,31 @@
+<div class="overlay">
+    <div class="modal">
+      <mat-card class="modal-container">
+        <div class="modal-content">
+          <div class="modal-details">
+            <mat-card-title>
+              <h2 class="modal-title">{{ libro.titulo }}</h2>
+            </mat-card-title>
+            <mat-card-content>
+                <p><strong>Nombre Del Libro:</strong> {{ libro.name }}</p>
+                <p><strong>Editorial:</strong>
+                    <ng-container *ngIf="libro.editorial.length <= 50; else tooLong">{{ libro.editorial }}</ng-container>
+                    <ng-template #tooLong>{{ libro.editorial | slice:0:50 }}...</ng-template>
+                </p>             
+                <p><strong>Identificador:</strong> {{ libro.id }}</p>
+            </mat-card-content>
+          </div>
+          <div class="modal-image-container">
+            <img class="modal-image" [src]="libro.portada ? libro.portada : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj6jBYbLaZcg6SQcrBRxX00q7MdPjilwOvYn3jUZTtvlbFPincvLG6yhJUp2O7bez6hOM&usqp=CAU'" alt="Portada del libro">
+          </div>
+        </div>
+        <mat-card-actions class="modal-actions">
+          <button (click)="cerrar()" mat-fab extended color="warn">
+            Cerrar
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  

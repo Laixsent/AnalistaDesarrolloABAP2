@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class MostrarComponent {
   mensajeError: string = '';
   libros: any[] = [];
+  selectedLibro: any | null = null;
 
   constructor(private apiService: ApiServiceService,private router: Router) {}
 
@@ -75,6 +76,21 @@ export class MostrarComponent {
       link.download = blobUrl;
       link.click();
     };
+    
+  }
+
+  openDetalleLibroModal(libro: any): void {
+    this.apiService.mostrarLibrosView({id: libro.id}).subscribe(
+      (response) => {          
+        // console.log(response);
+        this.selectedLibro = response;    
+      },
+      (error) => {
+        console.error('Error al obtener el libro', error);
+        this.mensajeError = 'Error al registrar. Inténtalo de nuevo más tarde.';
+      }
+    );
+    this.selectedLibro = libro;
     
   }
 

@@ -34,6 +34,7 @@ import { MostrarComponent } from './components/mostrar/mostrar.component';
 import { UniversidadesComponent } from './components/universidades/universidades.component';
 import { RegistrarUnisComponent } from './components/registrar-unis/registrar-unis.component';
 import { SistemaCentralComponent } from './components/sistema-central/sistema-central.component';
+import { ModalDetalleComponent } from './modal-detalle/modal-detalle.component';
 
 
 
@@ -50,7 +51,8 @@ import { SistemaCentralComponent } from './components/sistema-central/sistema-ce
     MostrarComponent,
     UniversidadesComponent,
     RegistrarUnisComponent,
-    SistemaCentralComponent
+    SistemaCentralComponent,
+    ModalDetalleComponent
   ],
   imports: [
     AppRoutingModule,

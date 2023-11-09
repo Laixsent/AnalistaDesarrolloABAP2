@@ -82,7 +82,7 @@ export class MostrarComponent {
   openDetalleLibroModal(libro: any): void {
     this.apiService.mostrarLibrosView({id: libro.id}).subscribe(
       (response) => {          
-        // console.log(response);
+        console.log(response);
         this.selectedLibro = response;    
       },
       (error) => {
@@ -90,7 +90,7 @@ export class MostrarComponent {
         this.mensajeError = 'Error al registrar. Inténtalo de nuevo más tarde.';
       }
     );
-    this.selectedLibro = libro;
+    // this.selectedLibro = libro;
     
   }
 

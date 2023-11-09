@@ -4,15 +4,15 @@
         <div class="modal-content">
           <div class="modal-details">
             <mat-card-title>
-              <h2 class="modal-title">{{ libro.titulo }}</h2>
+              <h2 class="modal-title">{{ libro.name }}</h2>
             </mat-card-title>
             <mat-card-content>
-                <p><strong>Nombre Del Libro:</strong> {{ libro.name }}</p>
+                <!-- <p><strong>Nombre Del Libro:</strong> {{ libro.name }}</p> -->
                 <p><strong>Editorial:</strong>
-                    <ng-container *ngIf="libro.editorial.length <= 50; else tooLong">{{ libro.editorial }}</ng-container>
-                    <ng-template #tooLong>{{ libro.editorial | slice:0:50 }}...</ng-template>
+                    <ng-container *ngIf="libro.edit.length <= 50; else tooLong">{{ libro.edit }}</ng-container>
+                    <ng-template #tooLong>{{ libro.edit | slice:0:50 }}...</ng-template>
                 </p>             
-                <p><strong>Identificador:</strong> {{ libro.id }}</p>
+                <p><strong>Identificador:</strong> {{ libro.identificador }}</p>
             </mat-card-content>
           </div>
           <div class="modal-image-container">

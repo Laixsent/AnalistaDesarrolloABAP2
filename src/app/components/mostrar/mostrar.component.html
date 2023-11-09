@@ -17,7 +17,8 @@
 </div>
 
 <app-modal-detalle
-  *ngIf="selectedLibro"
+  *ngIf="selectedLibro || selectedLibro2"
   [libro]="selectedLibro"
+  [libro2]="selectedLibro2"
   (cerrarModal)="selectedLibro = null">
 </app-modal-detalle>

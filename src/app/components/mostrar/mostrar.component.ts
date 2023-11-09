@@ -11,7 +11,8 @@ export class MostrarComponent {
   mensajeError: string = '';
   libros: any[] = [];
   selectedLibro: any | null = null;
-
+  selectedLibro2: any | null = null;
+  public nivelDeAcceso!: any;
   constructor(private apiService: ApiServiceService,private router: Router) {}
 
   ngOnInit(): void {
@@ -20,7 +21,7 @@ export class MostrarComponent {
     }else{
       this.apiService.mostrarLibros().subscribe(
         (response) => {          
-          console.log(response);
+          // console.log(response);
           this.libros = response.data;
         },
         (error) => {
@@ -80,17 +81,25 @@ export class MostrarComponent {
   }
 
   openDetalleLibroModal(libro: any): void {
-    this.apiService.mostrarLibrosView({id: libro.id}).subscribe(
-      (response) => {          
-        console.log(response);
-        this.selectedLibro = response;    
-      },
-      (error) => {
-        console.error('Error al obtener el libro', error);
-        this.mensajeError = 'Error al registrar. Inténtalo de nuevo más tarde.';
-      }
-    );
-    // this.selectedLibro = libro;
+    this.nivelDeAcceso = sessionStorage.getItem('sesionIniciada');
+    this.nivelDeAcceso = JSON.parse(this.nivelDeAcceso).access;
+    // console.log(this.nivelDeAcceso);
+    if(this.nivelDeAcceso !== 1) {
+      this.apiService.mostrarLibrosView({id: libro.id}).subscribe(
+        (response) => {          
+          console.log(response);
+          this.selectedLibro = response;    
+        },
+        (error) => {
+          console.error('Error al obtener el libro', error);
+          this.mensajeError = 'Error al registrar. Inténtalo de nuevo más tarde.';
+        }
+      );
+    }else{
+      this.selectedLibro2 = libro;
+      console.log(libro);
+      
+    }
     
   }
 

@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ModalDetalleComponent {
   @Input() libro: any;
+  @Input() libro2: any;
   @Output() cerrarModal = new EventEmitter<void>();
 
 
